@@ -1,0 +1,35 @@
+/********
+BASE
+********/
+@font-face {
+	font-family: 'cubano';
+	src: url('../fonts/Cubano-Regular.otf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+p {
+	margin: 0;
+}
+h2 {
+	font-family: cubano;
+	/*TODO : Resize font-size, line-height, letter-spacing depending on container size*/
+	font-size: 65px;
+	line-height: 65px;
+	margin: 5px 0;
+	color: #e98940;
+	text-shadow: 0px 0px 0px transparent;
+	filter: dropshadow(color=transparent, offx=0, offy=0);
+}
+#homeScreen1PScroll {
+	text-align: right;
+}
+.grey {
+	color: #b9b9b9;
+}
+/********
+STATIC
+********/
+
+/********
+JS
+********/
