@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	
+	<style>
+	
+		body * {
+			position : absolute;
+			z-index : 0;
+			overflow-x : hidden;
+		}
+		
+		#container {
+			overflow : hidden;
+			position : fixed;
+			height : 100%;
+			width : 100%;
+		}
+		
+		#scroller {
+			width : 100%;
+		}
+	
+	</style>
+	
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+	
+	<script>
+		// TODO : dans display.update on va verifier pour chaque element si son top et son bottom (top + height) sont dans le range topY - bottomY et l'ajouter a display.listElem
+		// Il faudra egalement simuler le scroll en deplacant tous les elements selon le scroll
+		// Ensuite il faudra faire un updateLayout qui changera l'opacity des elements progressivement selon le scroll et le resize
+		// Avant tout il faut a l'init setter l'opacity de tous les elem a 0
+		
+		/*
+		TODO 2 :
+		- On utilise le display.bottom pour savoir où on en est de l'animation
+		- On link les animations (scrollY + opacity dans un 1er temps) au display.bottom
+		- Chaque element demarre en opacity 0 et possede un startAnim et endAnim (2 valeurs y de scroll)
+		- Lorsque le display.bottom atteind le startAnim d'un elem, on calcule le pourcentage d'anim effectuee (display.bottom / endAnim - startAnim ou un truc du genre) et on applique une opacity egale a ce resultat
+
+		- onScroll :
+			- getScrollTop
+			- updateAnim
+		- onResize :
+			- getWinSize
+			- updateAnim
+		- updateAnim
+
+		elems = {
+			p1 : {
+				startAnim : 600,
+				endAnim : 900,
+				startOpacity : 0,
+				endOpacity : 1,
+				startY : 500,
+				endY : 900,
+				startX : 4000,
+				endX : 400
+			}
+		}
+		*/
+
+		$(document).ready(function () {
+
+			(function () {
+				var elems = {
+					p1 : {
+						startY : -100,
+						endY : 0,
+						startAnim : 0,
+						animDuration : 500
+					},
+					p2 : {
+						startY : 0,
+						endY : 100,
+						startAnim : 100,
+						animDuration : 300
+					},
+					p3 : {
+						startY : 100,
+						endY : 200,
+						startAnim : 200,
+						animDuration : 300
+					},
+					p4 : {
+						startY : 200,
+						endY : 300,
+						startAnim : 300,
+						animDuration : 300
+					},
+					p5 : {
+						startY : 300,
+						endY : 400,
+						startAnim : 400,
+						animDuration : 300
+					},
+					p6 : {
+						startY : 400,
+						endY : 500,
+						startAnim : 500,
+						animDuration : 300
+					},
+					img1 : {
+						startY : 500,
+						endY : 600,
+						startAnim : 600,
+						animDuration : 300
+					},
+					img2 : {
+						startY : 900,
+						endY : 1000,
+						startAnim : 1000,
+						animDuration : 300
+					},
+					img3 : {
+						startY : 1300,
+						endY : 1400,
+						startAnim : 1400,
+						animDuration : 300
+					},
+					img4 : {
+						startY : 1700,
+						endY : 1800,
+						startAnim : 1800,
+						animDuration : 300
+					}
+				},
+				onScroll = function (e) {
+					display.update();
+				},
+				display = {
+					topY : 0,
+					bottomY : 0,
+					winScroll : 0,
+					listElem : [],
+					update : function () {
+						
+						display.winScroll = $(window).scrollTop();
+						display.topY = display.winScroll;
+						display.bottomY = display.winScroll + $(window).height();
+						
+						$.each(elems, function (key, value) {
+							var coeffAnim = 0,
+								selec = "#" + key;
+
+							coeffAnim = Math.round(((display.bottomY - this.startAnim) / this.animDuration) * 100);
+							
+							// Il faut fixer au coeffAnim
+							if (coeffAnim < 100) {
+								$(selec).css("opacity", coeffAnim / 100);
+								$(selec).css("left", 4000 - coeffAnim * 40);
+							} else {
+								$(selec).css("opacity", 1);
+								$(selec).css("left", 0);
+							}
+							$(selec).css("top", ((this.startY + (this.endY - this.startY)) - display.winScroll) + "px");
+						});
+						
+					}
+				},
+				initLayout = function () {
+					
+					document.getElementById("scroller").style.height = "2050px";
+
+					$("#container *").each(function (index) {
+						$(this).css("opacity", 0);
+						$(this).css("top", $(window).height() + 1 + "px");
+					});
+
+					display.update();
+				},
+				init = function () {
+					// Attach event scroll resize
+					$(window).scroll(onScroll);
+					$(window).resize(onScroll);
+
+					initLayout();
+				}
+
+				init();
+
+			})();
+
+		});
+		
+	</script>
+	
+	</head>
+	
+	<body>
+		<div id="scroller"></div>
+		<div id="container">
+			<p id="p1">fsdlfl sdmlf sdlf lsf sd?lf sdfl msd fmsdlmfl sdjflk dsjkf jsdklf ksdjlf klsdjf hdskhfksdj fjksd jkdshfjkh sjkdhf. dfjsklf sdjfl sldfj sdkljf sljd l. djkls qskldj qsljd lqs jklqs dlkjqs lkqsjd qsklj qskldj lqs dlkqsj lqskjdkqsj fjsdkh fkjsd. jkljdqskdjlq qsdklj dqsklj kqs djlkjqdskl qkj lkqsj klqjd lq. fsdlfl sdmlf sdlf lsf sd?lf sdfl msd fmsdlmfl sdjflk dsjkf jsdklf ksdjlf klsdjf hdskhfksdj fjksd jkdshfjkh sjkdhf. dfjsklf sdjfl sldfj sdkljf sljd l. djkls qskldj qsljd lqs jklqs dlkjqs lkqsjd qsklj qskldj lqs dlkqsj lqskjdkqsj fjsdkh fkjsd. jkljdqskdjlq qsdklj dqsklj kqs djlkjqdskl qkj lkqsj klqjd lq. fsdlfl sdmlf sdlf lsf sd?lf sdfl msd fmsdlmfl sdjflk dsjkf jsdklf ksdjlf klsdjf hdskhfksdj fjksd jkdshfjkh sjkdhf. dfjsklf sdjfl sldfj sdkljf sljd l. djkls qskldj qsljd lqs jklqs dlkjqs lkqsjd qsklj qskldj lqs dlkqsj lqskjdkqsj fjsdkh fkjsd. jkljdqskdjlq qsdklj dqsklj kqs djlkjqdskl qkj lkqsj klqjd lq.</p>
+			<p id="p2">fdskhfksdj fjksd jkdshfjkh sjkdhf. dfjsklf sdjfl ztekqsj lqskjdkqsj fjsdkh fkjsd. jkljd qskfdq smsdlfl sdjflk dsjkf jsdklf ksdjlf klsdjf hdskhfksdj fjksd jkdshfjkh sjkdhf. dfjsklf sdjfl sldfj sdkljf sljd l. djkls qskldj qsljd lqs jklqs dlkjqs lkqsjd qsklj qskldj lqs dlkqsj lqskjdkqsj fjsdkh fkjsd. jkljdqskdjlq qsdklj dqsklj kqs djlkjqdskl qkj lkqsj klqjd lq. fsdlfl sdmlf sdlf lsf sd?lf sdfl msd fmsdlmfl sdjflk dsjkf jsdklf ksdjlf klsdjf hdskhfksdj fjksd jkdshfjkh sjkdhf. dfjsklf sdjfl sldfj sdkljf sljd l. djkls qskldj qsljd lqs jklqs dlkjqs lkqsjd qsklj qskldj lqs dlkqsj lqskjdkqsj fjsdkh fkjsd. jkljdqskdjlq qsdklj dqsklj kqs djlkjqdskl qkj lkqsj klqjd lq.</p>
+			<img id="img1" src="http://chocselectriquessurlaroute.blog-idrac.com/files/2011/02/mitsubishi-i-miev-electric-car-rrr01.jpg" />
+			<p id="p3">fsdlfl sdmlf sdlf lsf sd?lf sdfl msd fmsdlmfl sdjflk dsjkf jsdklf ksdjlf klsdjf hdskhfksdj fjksd jkdshfjkh sjkdhf. dfjsklf sdjfl sldfj sdkljf sljd l. djkls qskldj qsljd lqs jklqs dlkjqs lkqsjd qsklj qskldj lqs dlkqsj lqskjdkqsj fjsdkh fkjsd. jkljdqskdjlq qsdklj dqsklj kqs djlkjqdskl qkj lkqsj klqjd lq. fsdlfl sdmlf sdlf lsf sd?lf sdfl msd fmsdlmfl sdjflk dsjkf jsdklf ksdjlf klsdjf hdskhfksdj fjksd jkdshfjkh sjkdhf. dfjsklf sdjfl sldfj sdkljf sljd l. djkls qskldj qsljd lqs jklqs dlkjqs lkqsjd qsklj qskldj lqs dlkqsj lqskjdkqsj fjsdkh fkjsd. jkljdqskdjlq qsdklj dqsklj kqs djlkjqdskl qkj lkqsj klqjd lq. fsdlfl sdmlf sdlf lsf sd?lf sdfl msd fmsdlmfl sdjflk dsjkf jsdklf ksdjlf klsdjf hdskhfksdj fjksd jkdshfjkh sjkdhf. dfjsklf sdjfl sldfj sdkljf sljd l. djkls qskldj qsljd lqs jklqs dlkjqs lkqsjd qsklj qskldj lqs dlkqsj lqskjdkqsj fjsdkh fkjsd. jkljdqskdjlq qsdklj dqsklj kqs djlkjqdskl qkj lkqsj klqjd lq.</p>
+			<img id="img2" src="http://chocselectriquessurlaroute.blog-idrac.com/files/2011/02/mitsubishi-i-miev-electric-car-rrr01.jpg" />
+			<img id="img3" src="http://chocselectriquessurlaroute.blog-idrac.com/files/2011/02/mitsubishi-i-miev-electric-car-rrr01.jpg" />
+			<p id="p4">fsdlfl sdmlf sdlf lsf sd?lf sdfl msd fmsdlmfl sdjflk dsjkf jsdklf ksdjlf klsdjf hdskhfksdj fjksd jkdshfjkh sjkdhf. dfjsklf sdjfl sldfj sdkljf sljd l. djkls qskldj qsljd lqs jklqs dlkjqs lkqsjd qsklj qskldj lqs dlkqsj lqskjdkqsj fjsdkh fkjsd. jkljdqskdjlq qsdklj dqsklj kqs djlkjqdskl qkj lkqsj klqjd lq. fsdlfl sdmlf sdlf lsf sd?lf sdfl msd fmsdlmfl sdjflk dsjkf jsdklf ksdjlf klsdjf hdskhfksdj fjksd jkdshfjkh sjkdhf. dfjsklf sdjfl sldfj sdkljf sljd l. djkls qskldj qsljd lqs jklqs dlkjqs lkqsjd qsklj qskldj lqs dlkqsj lqskjdkqsj fjsdkh fkjsd. jkljdqskdjlq qsdklj dqsklj kqs djlkjqdskl qkj lkqsj klqjd lq. fsdlfl sdmlf sdlf lsf sd?lf sdfl msd fmsdlmfl sdjflk dsjkf jsdklf ksdjlf klsdjf hdskhfksdj fjksd jkdshfjkh sjkdhf. dfjsklf sdjfl sldfj sdkljf sljd l. djkls qskldj qsljd lqs jklqs dlkjqs lkqsjd qsklj qskldj lqs dlkqsj lqskjdkqsj fjsdkh fkjsd. jkljdqskdjlq qsdklj dqsklj kqs djlkjqdskl qkj lkqsj klqjd lq.</p>
+			<p id="p5">fsdlfl sdmlf sdlf lsf sd?lf sdfl msd fmsdlmfl sdjflk dsjkf jsdklf ksdjlf klsdjf hdskhfksdj fjksd jkdshfjkh sjkdhf. dfjsklf sdjfl sldfj sdkljf sljd l. djkls qskldj qsljd lqs jklqs dlkjqs lkqsjd qsklj qskldj lqs dlkqsj lqskjdkqsj fjsdkh fkjsd. jkljdqskdjlq qsdklj dqsklj kqs djlkjqdskl qkj lkqsj klqjd lq. fsdlfl sdmlf sdlf lsf sd?lf sdfl msd fmsdlmfl sdjflk dsjkf jsdklf ksdjlf klsdjf hdskhfksdj fjksd jkdshfjkh sjkdhf. dfjsklf sdjfl sldfj sdkljf sljd l. djkls qskldj qsljd lqs jklqs dlkjqs lkqsjd qsklj qskldj lqs dlkqsj lqskjdkqsj fjsdkh fkjsd. jkljdqskdjlq qsdklj dqsklj kqs djlkjqdskl qkj lkqsj klqjd lq. fsdlfl sdmlf sdlf lsf sd?lf sdfl msd fmsdlmfl sdjflk dsjkf jsdklf ksdjlf klsdjf hdskhfksdj fjksd jkdshfjkh sjkdhf. dfjsklf sdjfl sldfj sdkljf sljd l. djkls qskldj qsljd lqs jklqs dlkjqs lkqsjd qsklj qskldj lqs dlkqsj lqskjdkqsj fjsdkh fkjsd. jkljdqskdjlq qsdklj dqsklj kqs djlkjqdskl qkj lkqsj klqjd lq.</p>
+			<img id="img4" src="http://chocselectriquessurlaroute.blog-idrac.com/files/2011/02/mitsubishi-i-miev-electric-car-rrr01.jpg" />
+			<p id="p6">fsdlfl sdmlf sdlf lsf sd?lf sdfl msd fmsdlmfl sdjflk dsjkf jsdklf ksdjlf klsdjf hdskhfksdj fjksd jkdshfjkh sjkdhf. dfjsklf sdjfl sldfj sdkljf sljd l. djkls qskldj qsljd lqs jklqs dlkjqs lkqsjd qsklj qskldj lqs dlkqsj lqskjdkqsj fjsdkh fkjsd. jkljdqskdjlq qsdklj dqsklj kqs djlkjqdskl qkj lkqsj klqjd lq. fsdlfl sdmlf sdlf lsf sd?lf sdfl msd fmsdlmfl sdjflk dsjkf jsdklf ksdjlf klsdjf hdskhfksdj fjksd jkdshfjkh sjkdhf. dfjsklf sdjfl sldfj sdkljf sljd l. djkls qskldj qsljd lqs jklqs dlkjqs lkqsjd qsklj qskldj lqs dlkqsj lqskjdkqsj fjsdkh fkjsd. jkljdqskdjlq qsdklj dqsklj kqs djlkjqdskl qkj lkqsj klqjd lq. fsdlfl sdmlf sdlf lsf sd?lf sdfl msd fmsdlmfl sdjflk dsjkf jsdklf ksdjlf klsdjf hdskhfksdj fjksd jkdshfjkh sjkdhf. dfjsklf sdjfl sldfj sdkljf sljd l. djkls qskldj qsljd lqs jklqs dlkjqs lkqsjd qsklj qskldj lqs dlkqsj lqskjdkqsj fjsdkh fkjsd. jkljdqskdjlq qsdklj dqsklj kqs djlkjqdskl qkj lkqsj klqjd lq.</p>
+		</div>
+	</body>
+</html>
