@@ -1,103 +1,132 @@
-/*
-- Donner une class .anim a tous les elements animables
-- Au layout, stocker les values initiales des elements (x, y, opacity,...)
-*/
-
-$(document).ready(function() {
-	var onScroll = function() {
-			display.currentY = $(window).scrollTop();
-			if(display.currentY > 0) {
-				display.isAnimStarted = true;
-			} else {
-				display.isAnimStarted = false;
-			}
-			display.animCoeff = Math.floor((display.currentY / ($(document).height() - $(window).height())) * 100);
-			if(display.isAnimStarted) {
-				display.update();
-			} else {
-				display.init();
-			}
-			animations.play();
+// TODO : gerer correctement les positions comme http://jsfiddle.net/UNnZQ/1/
+// TODO : Voir pk le scrollTop de l'init ne fonctionne pas
+$(document).ready(function () {
+	
+	var init = function () {
+		$(window).scrollTop(0);
+		layout.initStatic();
+		if(layout.isDynamic) {
+			layout.initDynamic();
+		}
+		$(window).scroll(onScroll);
+		$(window).resize(onScroll);
+	},
+	layout = {
+		canvasH: 0,
+		canvasW: 0,
+		firstScreenMarginTop: 0,
+		isDynamic: function () {
+			// TODO : check screen size
+			return true;
 		},
-		display = {
-			currentY: 0,
-			animCoeff: 0,
-			isAnimStarted: false,
-			canvasH: 1500,
-			init: function() {
-				display.resizeMainTitle();
-				$("#content").height($(window).height() - 158);
-				// First screen position
-				$("#homeScreen1").offset(function(index, coords) {
-					var newTop = 0;
+		initStatic: function () {
+			layout.resizeText();
+		},
+		initDynamic: function () {
+			layout.canvasH = $("#content").height();
+			layout.canvasW = $("#content").width();
+			$("#canvasScroller").height(layout.canvasH);
+			$(".animScreen").each(function (i) {
+				$(this).css("position", "fixed");
+				$(this).css("width", layout.canvasW);
+				$(this).css("display", "none");
+			});
+			$("#content").css("height", layout.canvasH);
+			layout.posFirstScreen();
+		},
+		update: function () {
+			$(".animScreen").each(function (i) {
+				$(this).css("position", "static");
+			});
+			layout.canvasH = $("#content").height();
+			layout.canvasW = $("#content").width();
+			$("#canvasScroller").height(layout.canvasH);
+			$(".animScreen").each(function (i) {
+				$(this).css("position", "fixed");
+				$(this).css("width", layout.canvasW);
+			});
+			$("#content").css("height", layout.canvasH);
+			layout.posFirstScreen();
+		},
+		posFirstScreen: function () {
+			var pos = $("#homeScreen1").height() < $(window).height() ? ($(window).height() - $("#homeScreen1").height()) / 2 : 10;
 
-					newTop = ($(window).height() / 2) - ($("#homeScreen1").height() / 2) - 75;
-					return {top: newTop, left: coords.left};
-				});
-				// Menu initial position
-				$("#mainNav").css("margin-top", function() {
-					var newMarginTop = 0;
+			/*$("#homeScreen1").css("top", pos + "px");*/
+			$('#homeScreen1').animate({
+			  top: pos + "px"
+			}, 300, function() {
+			  // Animation complete.
+			});
+			
+			$("#homeScreen1").css("display", "block");
+			layout.firstScreenMarginTop = ($(window).height() - $("#homeScreen1").height()) / 2;
+		},
+		resizeText: function () {
+			// TODO : do the same for all texts
+			var containerW = $("#content").width(),
+				mainRatio = 9.5,
+				subRation = 7.5;
+			$("#homeTitle1").css("font-size", Math.floor(containerW / mainRatio) + "px");
+			$("#homeTitle1 .grey").css("font-size", Math.floor(containerW / subRation) + "px");
+			$("#homeTitle1").css("line-height", Math.floor(containerW / mainRatio) + "px");
+		}
+	},
+	anim = {
+		coeff: 0,
+		isStarted: false,
+		topY: 0,
+		bottomY: 0,
+		winScroll: 0,
+		lastWinScroll: 0,
+		isScrollingDown: function() {
+			if (anim.winScroll > anim.lastWinScroll) {
+				return true;
+			} else {
+				return false;
+			}
+		},
+		update: function () {
+			anim.lastWinScroll = anim.winScroll;
+			anim.winScroll = anim.topY = $(window).scrollTop();
+			anim.bottomY = anim.winScroll + $(window).height();
+			anim.coeff = Math.floor((anim.topY / ($(document).height() - $(window).height())) * 100);
 
-					newMarginTop = ($(window).height() / 2) - ($("#mainNav").height() / 2) - 210;
-					return newMarginTop + "px";
-				});
-				// Canvas scroller height in order to set a fake scrollbar
-				$("#canvasScroller").height(display.canvasH);
-				// Get animMe elems values
-				animations.elements = [$("#mainNav").clone()];
-				$(".animMe:not(#mainNav)").each(function(i) {
-					//$(this).css("position", "absolute");
-					animations.elements.push($(this).clone());
-				});
-			},
-			update: function() {
+			if (anim.topY > 0) {
+				anim.isStarted = true;
+			} else {
+				anim.isStarted = false;
+			}
+			
+			anim.play();
+			
+		},
+		play: function() {
+			if(anim.coeff > 0 && anim.coeff <= 20) {
+				// TODO : replacer l'anim en position de depart #homeScreen1 au centre quand on revient au debut (animate ?)
+
+				/*if(anim.isScrollingDown()) {
+					$("#homeScreen1").css({top: "-=20px"});
+				} else {
+					$("#homeScreen1").css({top: "+=20px"});
+				}*/
+
+				$("#homeScreen1").css("top", - $(window).scrollTop() + layout.firstScreenMarginTop + "px");
+
+				//$("#homeScreen1").css("top", - $(window).scrollTop() + ($("#homeScreen1").offset().top) + "px");
+				//$("#homeScreen1").css({top: "-=" + $(window).scrollTop() + "px"});
 				
-			},
-			resizeMainTitle: function() {
-				// recuperer la largeur du container
-				var containerW = $("#content").width(),
-					mainRatio = 9.5,
-					subRation = 7.5;
-				// taille de police = un certain pourcentage de la largeur du container
-				$("#homeTitle1").css("font-size", Math.floor(containerW / mainRatio) + "px");
-				$("#homeTitle1 .grey").css("font-size", Math.floor(containerW / subRation) + "px");
-				$("#homeTitle1").css("line-height", Math.floor(containerW / mainRatio) + "px");
 			}
-		},
-		animations = {
-			elements: [],
-			getElementById: function(idToFetch) {
-				var i;
-				for(i = 0; i < animations.elements.length; i++) {
-					if($(animations.elements[i]).attr("id") == idToFetch) {
-						return animations.elements[i];
-					}
-				}
-				return null;
-			},
-			play: function() {
-				//Menu
-				if(display.animCoeff >= 1 && display.animCoeff <= 20) {
-					$("#mainNav").css("margin-top", function(index, value) {
-						var currentValue = value.substring(0, $("#mainNav").css("margin-top").length - 2),
-								initValue = $(animations.getElementById("mainNav")).css("margin-top").substring(0, $(animations.getElementById("mainNav")).css("margin-top").length - 2),
-								coeff = $(window).height() / 185;
-								console.log(coeff);
-						return initValue - (Math.floor(display.animCoeff * coeff));
-					});
-				}
-				//#homeScreen1 p
-				if(display.animCoeff >= 1 && display.animCoeff <= 20) {
-					
-				}
-			}
-		};
+		}
+	},
+	onScroll = function (e) {
+		if(e.type == "resize") {
+			layout.resizeText();	
+		}
+		anim.update();
+		if(!anim.isStarted) {
+			layout.update();
+		}
+	};
 
-	// Listeners
-	$(window).bind("resize", onScroll);
-	$(window).bind("scroll", onScroll);
-
-	// Init
-	// TODO : dans l'init, on devra verifier la taille de l'ecran et n'afficher le mode interactif que si l'ecran a une certaine taille
-	display.init();
+	init();
 });
