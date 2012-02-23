@@ -34,10 +34,14 @@ STATIC
 /********
 JS
 ********/
+.hidden {
+	display: none;
+}
 #container {
 	padding-top: 0;
 }
 #content {
+	padding-top: 100px;
 }
 #mainNav {
 	margin-top: 100px;
@@ -45,4 +49,96 @@ JS
 .animScreen {
 	width: 100%;
 	overflow: hidden;
+	margin-bottom: 100px;
+}
+#content img {
+	-webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+	-moz-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+	box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+	margin: 0;
+}
+#homeScreen2 img {
+	margin: 20px 0;
+}
+.orange {
+	color: #e98940;
+}
+#homeScreen3 div {
+	width: 100%;
+	max-width: 700px;
+	height: 125px;
+	position: relative;
+	margin-bottom: 50px;
+}
+#homeScreen3 div img {
+	position: absolute;
+}
+#homeScreen3 div #homeImgSuitedSquare {
+	top: 0;
+	left: 41%;
+}
+#homeScreen3 div #homeImgSuitedBoring {
+	top: 30px;
+	left: 0;
+}
+#homeScreen3 div #homeImgSuitedDifficult {
+	top: 30px;
+	right: 0;
+}
+#homeScreen3 div #homeImgSuitedLine {
+	bottom: 0;
+}
+#homeScreen4 div {
+	width: 100%;
+	max-width: 700px;
+	height: 103px;
+	position: relative;
+	margin-bottom: 50px;
+}
+#homeScreen4 div img {
+	position: absolute;
+}
+#homeScreen4 div #homeImgSmartSquare {
+	top: 0;
+	left: 41%;
+}
+#homeScreen4 div #homeImgSmartBulbBg {
+	bottom: 20px;
+	left: 46.5%;
+}
+#homeScreen4 div #homeImgSmartBulb {
+	bottom: 20px;
+	left: 46.5%;
+}
+#homeScreen4 div #homeImgSmartLine {
+	bottom: 0;
+}
+#homeScreen5 div {
+	width: 100%;
+	max-width: 700px;
+	height: 140px;
+	position: relative;
+	margin-bottom: 50px;
+}
+#homeScreen5 div img {
+	position: absolute;
+}
+#homeScreen5 div #homeImgHelpfulSquare {
+	bottom: 1px;
+	left: 41%;
+}
+#homeScreen5 div #homeImgHelpfulGearBig {
+	bottom: 20px;
+	left: 42.5%;
+}
+#homeScreen5 div #homeImgHelpfulGearSmall {
+	bottom: 10px;
+	left: 51%;
+}
+#homeScreen5 div #homeImgHelpfulHeart {
+	top: 0;
+	left: 40%;
+}
+#homeScreen5 div #homeImgHelpfulLine {
+	bottom: 0;
 }

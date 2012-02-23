@@ -1,5 +1,6 @@
 // TODO : gerer correctement les positions comme http://jsfiddle.net/UNnZQ/1/
-// TODO : Voir pk le scrollTop de l'init ne fonctionne pas
+// TODO : Voir pk le scrollTop de l'init ne fonctionne pas sous chrome
+// TODO : Au lieu d'appeler anim.update() à chaque scroll, l'appeler avec un rAF : https://tinker.io/cbd9d/1
 $(document).ready(function () {
 	
 	var init = function () {
@@ -51,11 +52,10 @@ $(document).ready(function () {
 		posFirstScreen: function () {
 			var pos = $("#homeScreen1").height() < $(window).height() ? ($(window).height() - $("#homeScreen1").height()) / 2 : 10;
 
-			/*$("#homeScreen1").css("top", pos + "px");*/
 			$('#homeScreen1').animate({
 			  top: pos + "px"
 			}, 300, function() {
-			  // Animation complete.
+			  $(window).scrollTop(0);
 			});
 			
 			$("#homeScreen1").css("display", "block");
@@ -78,6 +78,7 @@ $(document).ready(function () {
 		bottomY: 0,
 		winScroll: 0,
 		lastWinScroll: 0,
+		speed: 0,
 		isScrollingDown: function() {
 			if (anim.winScroll > anim.lastWinScroll) {
 				return true;
@@ -89,7 +90,10 @@ $(document).ready(function () {
 			anim.lastWinScroll = anim.winScroll;
 			anim.winScroll = anim.topY = $(window).scrollTop();
 			anim.bottomY = anim.winScroll + $(window).height();
-			anim.coeff = Math.floor((anim.topY / ($(document).height() - $(window).height())) * 100);
+			//anim.coeff = Math.floor((anim.topY / ($(document).height() - $(window).height())) * 100);
+			//anim.coeff = Math.floor((anim.bottomY / ($(document).height() - $(window).height())) * 100);
+			anim.coeff = Math.floor((anim.topY / $(document).height()) * 100);
+			anim.speed = Math.round(Math.min($(document).height() / 100, 100));
 
 			if (anim.topY > 0) {
 				anim.isStarted = true;
@@ -101,24 +105,28 @@ $(document).ready(function () {
 			
 		},
 		play: function() {
-			if(anim.coeff > 0 && anim.coeff <= 20) {
-				// TODO : replacer l'anim en position de depart #homeScreen1 au centre quand on revient au debut (animate ?)
-
-				/*if(anim.isScrollingDown()) {
-					$("#homeScreen1").css({top: "-=20px"});
-				} else {
-					$("#homeScreen1").css({top: "+=20px"});
-				}*/
-
-				$("#homeScreen1").css("top", - $(window).scrollTop() + layout.firstScreenMarginTop + "px");
-
-				//$("#homeScreen1").css("top", - $(window).scrollTop() + ($("#homeScreen1").offset().top) + "px");
-				//$("#homeScreen1").css({top: "-=" + $(window).scrollTop() + "px"});
-				
+			console.log("play : " + anim.winScroll);
+			// Anim #homeScreen1 Y
+			if (anim.coeff > 0 && anim.coeff <= 5) {
+				console.log("play 0 - 5 : " + anim.winScroll);
+				$("#homeScreen1").css("top", - $(window).scrollTop() + (layout.firstScreenMarginTop + anim.speed) + "px");
 			}
+			// Anim #homeScreen1 Y 2nd part
+			// Il ne faut plus se baser sur le scrollTop car il aura avance entre temps...
+			// Il faut soustraire du scrollTop la valeur absolue representee par le pourcentage entre 5 et 5 (arret vs reprise)
+			// coeff to absolue : (anim.coeff / 100) * $(document).height())
+			if (anim.coeff > 10 && anim.coeff <= 15) {
+				console.log("play 10 - 15 : " + anim.winScroll);
+				$("#homeScreen1").css("top", - ($(window).scrollTop() - ((5 / 100) * $(document).height())) + (layout.firstScreenMarginTop - anim.speed * 2) + "px");
+			}
+			// Intro phrase (scroll for more) opacity
+			// coeff local : (anim.coeff / (coeffMax - coeffMin)) * 100
+			// ex : (10 / (15 - 0)) * 100
+			$("#homeScreen1PScroll").css("opacity", 1 - (anim.coeff / 15));
 		}
 	},
 	onScroll = function (e) {
+		console.log("onScroll : " + anim.winScroll);
 		if(e.type == "resize") {
 			layout.resizeText();	
 		}
@@ -128,5 +136,5 @@ $(document).ready(function () {
 		}
 	};
 
-	init();
+	//init();
 });
