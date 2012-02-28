@@ -42,6 +42,7 @@ JS
 }
 #content {
 	padding-top: 100px;
+	position: relative;
 }
 #mainNav {
 	margin-top: 100px;
@@ -57,9 +58,60 @@ JS
 	box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
 	margin: 0;
 }
-#homeScreen2 img {
-	margin: 20px 0;
+#homeScreen1 {
+	position: absolute;
+	top: 10px;
+	left: 0;
 }
+#animContainer {
+	position: absolute;
+	top: 650px;
+	left: 0;
+}
+#homeScreen2 {
+	position: relative;
+	height: 400px;
+}
+#homeScreen2 img {
+	position: absolute;
+	top: 10px;
+	left: 0;
+}
+#homeImgRea1 {
+	z-index: 120;
+}
+#homeImgRea2 {
+	z-index: 119;
+	-moz-transform: scale(1) rotate(2deg) translate(0px, 0px) skew(0deg, 0deg);
+	-webkit-transform: scale(1) rotate(2deg) translate(0px, 0px) skew(0deg, 0deg);
+	-o-transform: scale(1) rotate(2deg) translate(0px, 0px) skew(0deg, 0deg);
+	-ms-transform: scale(1) rotate(2deg) translate(0px, 0px) skew(0deg, 0deg);
+	transform: scale(1) rotate(2deg) translate(0px, 0px) skew(0deg, 0deg);
+}
+#homeImgRea3 {
+	z-index: 118;
+	-moz-transform: scale(1) rotate(-2deg) translate(0px, 0px) skew(0deg, 0deg);
+	-webkit-transform: scale(1) rotate(-2deg) translate(0px, 0px) skew(0deg, 0deg);
+	-o-transform: scale(1) rotate(-2deg) translate(0px, 0px) skew(0deg, 0deg);
+	-ms-transform: scale(1) rotate(-2deg) translate(0px, 0px) skew(0deg, 0deg);
+	transform: scale(1) rotate(-2deg) translate(0px, 0px) skew(0deg, 0deg);
+}
+#homeImgRea4 {
+	z-index: 117;
+	-moz-transform: scale(1) rotate(1deg) translate(0px, 0px) skew(0deg, 0deg);
+	-webkit-transform: scale(1) rotate(1deg) translate(0px, 0px) skew(0deg, 0deg);
+	-o-transform: scale(1) rotate(1deg) translate(0px, 0px) skew(0deg, 0deg);
+	-ms-transform: scale(1) rotate(1deg) translate(0px, 0px) skew(0deg, 0deg);
+	transform: scale(1) rotate(1deg) translate(0px, 0px) skew(0deg, 0deg);
+}
+
+#homeMainSquare {
+	position: absolute;
+	left: 41%;
+	top: 150px;
+	z-index: 116;
+}
+
 .orange {
 	color: #e98940;
 }
@@ -205,6 +257,7 @@ JS
   -moz-box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
   box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
   margin: 0 auto;
+  position: static;
 }
 #homeScreen6 #homeHob #homeHobImgVideoGames {
   top: 13%;
@@ -217,7 +270,7 @@ JS
   height: 105px;
 }
 #homeScreen6 #homeHob #homeHobImgTennis img {
-  margin-top: 5px;
+  margin-top: 6%;
 }
 #homeScreen6 #homeHob #homeHobImgDraw {
   top: 5%;
@@ -226,7 +279,7 @@ JS
   height: 120px;
 }
 #homeScreen6 #homeHob #homeHobImgDraw img {
-  margin-top: 15px;
+  margin-top: 12%;
 }
 #homeScreen6 #homeHob #homeHobImgDev {
   top: 43%;
@@ -235,7 +288,7 @@ JS
   height: 140px;
 }
 #homeScreen6 #homeHob #homeHobImgDev img {
-  margin-top: 22px;
+  margin-top: 16%;
 }
 #homeScreen6 #homeAct #homeActContainer {
 	height: 400px;
