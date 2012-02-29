@@ -1,10 +1,10 @@
 /* Author: 
 
 */
-Shadowbox.init({
+/*Shadowbox.init({
     viewportPadding: 5,
     overlayOpacity: 0.8
-});
+});*/
 /*
 $(document).ready(function(){
 

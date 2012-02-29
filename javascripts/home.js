@@ -1,7 +1,9 @@
 // TODO : minimiser le fouc notamment sur la typo soit en placant un preload, soit en placant les scripts juste apres les css
 
 $(document).ready(function () {
-	var isScrolled = false;
+	var isScrolled = false,
+		scrollorama,
+		initScreenPositions = [];
 
 	// Resize text + a l'update
 	function init () {
@@ -16,23 +18,78 @@ $(document).ready(function () {
 		$square.attr("id", "homeMainSquare");
 		$("#homeScreen2").before($square);
 
-		initLayout();
 		resizeText();
 		resizeBubbles();
+
+		scrollorama = null;
+		scrollorama = $.scrollorama({
+	        blocks:'.animScreen'
+	    });
+		initScreenPositions = [
+			0,
+			parseInt($('#homeScreen3').css("top")) - parseInt($('#homeScreen2').css("top")),
+			parseInt($('#homeScreen4').css("top")) - parseInt($('#homeScreen2').css("top")),
+			parseInt($('#homeScreen5').css("top")) - parseInt($('#homeScreen2').css("top")),
+			parseInt($('#homeScreen6').css("top")) - parseInt($('#homeScreen2').css("top")),
+			parseInt($('#homeScreen7').css("top")) - parseInt($('#homeScreen2').css("top"))
+		];
+		initLayout();
+
 	};
 
 	function initLayout () {
-		var pos = $("#homeScreen1").height() < $(window).height() ? ($(window).height() - $("#homeScreen1").height()) / 2 : 10,
-				posScreen2 = $(window).height() + 20;
+		var pos = $("#homeScreen1").height() < $(window).height() ? ($(window).height() - $("#homeScreen1").height()) / 2 : 10;
 
 		$('#homeScreen1').css({top: pos + "px"});
-		$('#animContainer').css({top: posScreen2 + "px"});
 
-		$('#animContainer *').css({opacity: 0});
+		$('#homeScreen2').css({top: $(window).height() + "px"});
+		$('#homeScreen3').css({top: $(window).height() + initScreenPositions[1] + "px"});
+		$('#homeScreen4').css({top: $(window).height() + initScreenPositions[2] + "px"});
+		$('#homeScreen5').css({top: $(window).height() + initScreenPositions[3] + "px"});
+		$('#homeScreen6').css({top: $(window).height() + initScreenPositions[4] + "px"});
+		$('#homeScreen7').css({top: $(window).height() + initScreenPositions[5] + "px"});
+
+		$("#homeMainSquare").css({top: parseInt($('#homeScreen2').css("top")) + 150 + "px"});
+
+		// Anim configuration
+		/*console.log($(window).height() + 50);
+		scrollorama.animate("#introTxtContainer",{
+		    delay: $(window).height() + 50,
+		    duration: 300,
+		    property: 'opacity',
+		    start: 1,
+		    end: 1,
+		    pin: true
+		});*/
+
+		// First image
+		// TODO : pour gerer les positions fixed voir si il ne faut pas donner a chaque bloque la hauteur de window
+		scrollorama.animate("#homeImgRea1",{
+		    delay: 900,
+		    duration: 300,
+		    baseline: "bottom",
+		    property: 'top',
+		    end: parseInt($('#homeImgRea1').css("top")) - 250,
+		    pin: true
+		});
+		scrollorama.animate("#homeImgRea1",{
+		    delay: 900,
+		    duration: 300,
+		    baseline: "bottom",
+		    property: 'rotate',
+		    end: 50
+		});
+		scrollorama.animate("#homeImgRea1",{
+		    delay: 900,
+		    duration: 600,
+		    baseline: "bottom",
+		    property: 'left',
+		    end: $(window).width() + 100
+		});
+
 	};
 
 	function resizeBubbles () {
-		console.log("dsdq");
 		var containerW = $("#content").width(),
 				mainRatio = 10;
 
@@ -98,7 +155,7 @@ $(document).ready(function () {
 		resizeText();
 		resizeBubbles();
 	});
-
+	
 	init();
 
 });
