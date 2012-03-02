@@ -27,18 +27,12 @@ h2 {
 .grey {
 	color: #b9b9b9;
 }
-/********
-STATIC
-********/
 
 /********
 JS
 ********/
 html {
 	overflow-x: hidden;
-}
-.hidden {
-	display: none;
 }
 #container {
 	padding-top: 0;
@@ -50,10 +44,16 @@ html {
 #mainNav {
 	margin-top: 100px;
 }
+#scrollWrapper {
+	position: absolute;
+	display: block;
+	width: 100%;
+}
 .animScreen {
 	width: 100%;
-	overflow: hidden;
+	/*overflow: hidden;*/
 	margin-bottom: 100px;
+	max-width: 710px;
 }
 #content img {
 	-webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
@@ -73,11 +73,13 @@ html {
 	left: 0;
 }
 */
+/*
 #introTxtContainer {
 	height: auto;
 	position: static;
 	margin-bottom: 0;
 }
+*/
 #homeScreen2 {
 	position: relative;
 	height: 400px;
@@ -90,7 +92,7 @@ html {
 }
 #homeImgRea1 {
 	z-index: 120;
-	position: relative;
+	/*position: relative;*/
 }
 #homeImgRea2 {
 	z-index: 119;
@@ -120,7 +122,6 @@ html {
 #homeMainSquare {
 	position: absolute;
 	left: 41%;
-	top: 150px;
 	z-index: 116;
 }
 
@@ -128,14 +129,18 @@ html {
 	color: #e98940;
 }
 
-.animScreen div {
+#homeScreen3 div,
+#homeScreen4 div,
+#homeScreen5 div {
 	width: 100%;
 	max-width: 700px;
 	height: 125px;
 	position: relative;
 	margin-bottom: 50px;
 }
-.animScreen div img {
+#homeScreen3 div img,
+#homeScreen4 div img,
+#homeScreen5 div img {
 	position: absolute;
 }
 #homeScreen3 div #homeImgSuitedSquare {
@@ -203,6 +208,7 @@ html {
 }
 #homeScreen6 #homeAge {
 	width: 100%;
+	height: 130px;
 	margin: 0 0 50px 0;
 	padding: 0 0 25px 0;
 	position: relative;
@@ -319,41 +325,41 @@ html {
 	text-align: center;
 	-moz-transform: matrix(1, -0.05, 0, 1, 0, 0);
  	-webkit-transform: matrix(1, -0.05, 0, 1, 0, 0);
-  -o-transform: matrix(1, -0.05, 0, 1, 0, 0);
+  	-o-transform: matrix(1, -0.05, 0, 1, 0, 0);
  	-ms-transform: matrix(1, -0.05, 0, 1, 0, 0);
-  transform: matrix(1, -0.05, 0, 1, 0, 0);
-  position: absolute;
+  	transform: matrix(1, -0.05, 0, 1, 0, 0);
+  	position: absolute;
 }
 #homeScreen6 #homeAct #homeActContainer div p {
 	-moz-transform: matrix(1, 0.05, 0, 1, 0, 0);
  	-webkit-transform: matrix(1, 0.05, 0, 1, 0, 0);
-  -o-transform: matrix(1, 0.05, 0, 1, 0, 0);
+  	-o-transform: matrix(1, 0.05, 0, 1, 0, 0);
  	-ms-transform: matrix(1, 0.05, 0, 1, 0, 0);
-  transform: matrix(1, 0.05, 0, 1, 0, 0);
+  	transform: matrix(1, 0.05, 0, 1, 0, 0);
 }
 #homeScreen6 #homeActZombies {
-	height: 130px;
+	height: 117px;
 	background-color: #ed4a34;
-	bottom: 0;
+	bottom: -10px;
 	padding-top: 40px;
 }
 #homeScreen6 #homeAct #homeActContainer #homeActLearn {
 	height: 90px;
 	background-color: #e96c40;
-	bottom:140px;
+	bottom:130px;
 	padding-top: 30px;
 	-moz-transform: matrix(1, 0.05, 0, 1, 0, 0);
  	-webkit-transform: matrix(1, 0.05, 0, 1, 0, 0);
-  -o-transform: matrix(1, 0.05, 0, 1, 0, 0);
+  	-o-transform: matrix(1, 0.05, 0, 1, 0, 0);
  	-ms-transform: matrix(1, 0.05, 0, 1, 0, 0);
-  transform: matrix(1, 0.05, 0, 1, 0, 0);
+  	transform: matrix(1, 0.05, 0, 1, 0, 0);
 }
 #homeScreen6 #homeAct #homeActContainer #homeActLearn p {
 	-moz-transform: matrix(1, -0.05, 0, 1, 0, 0);
  	-webkit-transform: matrix(1, -0.05, 0, 1, 0, 0);
-  -o-transform: matrix(1, -0.05, 0, 1, 0, 0);
+  	-o-transform: matrix(1, -0.05, 0, 1, 0, 0);
  	-ms-transform: matrix(1, -0.05, 0, 1, 0, 0);
-  transform: matrix(1, -0.05, 0, 1, 0, 0);
+  	transform: matrix(1, -0.05, 0, 1, 0, 0);
 }
 #homeScreen6 #homeActDesign {
 	height: 80px;
@@ -368,16 +374,16 @@ html {
 	padding-top: 10px;
 	-moz-transform: matrix(1, 0.02, 0, 1, 0, 0);
  	-webkit-transform: matrix(1, 0.02, 0, 1, 0, 0);
-  -o-transform: matrix(1, 0.02, 0, 1, 0, 0);
+  	-o-transform: matrix(1, 0.02, 0, 1, 0, 0);
  	-ms-transform: matrix(1, 0.02, 0, 1, 0, 0);
-  transform: matrix(1, 0.02, 0, 1, 0, 0);
+  	transform: matrix(1, 0.02, 0, 1, 0, 0);
 }
 #homeScreen6 #homeAct #homeActContainer #homeActDev p {
 	-moz-transform: matrix(1, -0.02, 0, 1, 0, 0);
  	-webkit-transform: matrix(1, -0.02, 0, 1, 0, 0);
-  -o-transform: matrix(1, -0.02, 0, 1, 0, 0);
+  	-o-transform: matrix(1, -0.02, 0, 1, 0, 0);
  	-ms-transform: matrix(1, -0.02, 0, 1, 0, 0);
-  transform: matrix(1, -0.02, 0, 1, 0, 0);
+  	transform: matrix(1, -0.02, 0, 1, 0, 0);
 }
 #homeScreen6 #homeAct #homeActContainer #homeActIllu {
 	height: 60px;
