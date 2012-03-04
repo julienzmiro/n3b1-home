@@ -55,6 +55,13 @@ html {
 	margin-bottom: 100px;
 	max-width: 710px;
 }
+.animScreen h2 {
+	-moz-transform-style: "preserve-3d";
+	-webkit-transform-style: "preserve-3d";
+	-o-transform-style: "preserve-3d";
+	-ms-transform-style: "preserve-3d";
+	transform-style: "preserve-3d";
+}
 #content img {
 	-webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
 	-moz-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
@@ -138,6 +145,9 @@ html {
 	position: relative;
 	margin-bottom: 50px;
 }
+#homeScreen4 div {
+	margin-bottom: 70px;
+}
 #homeScreen3 div img,
 #homeScreen4 div img,
 #homeScreen5 div img {
@@ -168,10 +178,12 @@ html {
 #homeScreen4 div #homeImgSmartBulbBg {
 	bottom: 20px;
 	left: 46.5%;
+	z-index: 200;
 }
 #homeScreen4 div #homeImgSmartBulb {
 	bottom: 20px;
 	left: 46.5%;
+	z-index: 201;
 }
 #homeScreen4 div #homeImgSmartLine {
 	bottom: 0;

@@ -106,7 +106,17 @@ $(document).ready(function () {
 		$(".animScreen").each(function (i, elem) {
 			$(this).css("top", ($(window).height() / 2 - $(this).height() / 2) + "px");
 		});
-		$("#homeMainSquare").css({top: $('#homeScreen2').offset().top + 150 + "px", opacity: 0});
+		$("#homeMainSquare").css({
+			position: "fixed",
+			top: ($(window).height() / 3.8 - $("#homeMainSquare").height() / 2) + "px",
+			left: ($(window).width() / 2 - $("#homeMainSquare").width() / 2 + 50) + "px",
+			opacity: 0
+		});
+		// Correction img homeScreen5
+		$("#homeScreen5 div img:not(#homeImgHelpfulHeart)").each(function (i, elem) {
+			$(this).css("bottom", "+=22px");
+		});
+		$("#homeImgHelpfulHeart").css("top", "-=22px");
 		
 
 		/*$(".animScreen").css({height: $(window).height(), marginBottom: 0});
@@ -185,13 +195,142 @@ $(document).ready(function () {
 		// max marginTop : $(window).height() min marginTop : 0
 		$("#homeScreen2").css("margin-top", 0 + Math.floor((((100 - Math.min((scrolledPercent * 6), 100)) / 100) * $(window).height())) + "px");
 		/*******************
+		homeMainSquare
+		*******************/
+		$("#homeMainSquare").css("opacity", 0 + getLocalPercent(17, 27) / 100);
+		/*******************
 		homeImgRea1
 		*******************/
 		// 0 a 55
-		// TODO : trouver comment faire demarrer ce changement a un certain pourcentage
-		$("#homeImgRea1").css(browserPrefix + "transform", "rotate(" + Math.floor(0 + (getLocalPercent(15, 25) / 100) * 55) + "deg)");
-		// 0 + (scrolledPercent / 100) * 55
-		// Faire un percentLocal entre la valeur de depart (soit en absolu soit en %) et la valeur de fin d'anim
+		$("#homeImgRea1").css(browserPrefix + "transform", "rotate(" + Math.floor(0 + (getLocalPercent(17, 22) / 100) * 55) + "deg)");
+		// 0 a scrolledValue
+		$("#homeImgRea1").css("top", 0 + Math.floor((getLocalPercent(17, 27) / 100) * -(scrolledValue )) + "px");
+		// 0 a windowWidth
+		$("#homeImgRea1").css("left", 0 + Math.floor((getLocalPercent(18, 32) / 100) * $(window).width()) + "px");
+		/*******************
+		homeImgRea2
+		*******************/
+		// 2 a 55
+		$("#homeImgRea2").css(browserPrefix + "transform", "rotate(" + Math.floor(2 + (getLocalPercent(22, 27) / 100) * 55) + "deg)");
+		// 0 a scrolledValue
+		$("#homeImgRea2").css("top", 0 + Math.floor((getLocalPercent(22, 32) / 100) * -(scrolledValue )) + "px");
+		// 0 a windowWidth
+		$("#homeImgRea2").css("left", 0 + Math.floor((getLocalPercent(23, 37) / 100) * $(window).width()) + "px");
+		/*******************
+		homeImgRea3
+		*******************/
+		// -2 a 55
+		$("#homeImgRea3").css(browserPrefix + "transform", "rotate(" + Math.floor(-2 + (getLocalPercent(27, 32) / 100) * 55) + "deg)");
+		// 0 a scrolledValue
+		$("#homeImgRea3").css("top", 0 + Math.floor((getLocalPercent(27, 37) / 100) * -(scrolledValue )) + "px");
+		// 0 a windowWidth
+		$("#homeImgRea3").css("left", 0 + Math.floor((getLocalPercent(28, 42) / 100) * $(window).width()) + "px");
+		/*******************
+		homeImgRea4
+		*******************/
+		// 1 a 55
+		$("#homeImgRea4").css(browserPrefix + "transform", "rotate(" + Math.floor(1 + (getLocalPercent(32, 37) / 100) * 55) + "deg)");
+		// 0 a scrolledValue
+		$("#homeImgRea4").css("top", 0 + Math.floor((getLocalPercent(32, 42) / 100) * -(scrolledValue )) + "px");
+		// 0 a windowWidth
+		$("#homeImgRea4").css("left", 0 + Math.floor((getLocalPercent(33, 47) / 100) * $(window).width()) + "px");
+		/*******************
+		homeScreen3
+		*******************/
+		$("#homeScreen3").css("opacity", 0 + getLocalPercent(33, 34) / 100);
+		// max : $(window).height() min : parseInt($("#homeMainSquare").css("top")) - parseInt($("#homeScreen3").css("top")
+		$("#homeScreen3").css("margin-top", Math.floor(parseInt($("#homeMainSquare").css("top")) - parseInt($("#homeScreen3").css("top")) + ((1 - getLocalPercent(33, 37) / 100) * $(window).height()))  + "px");
+		/*******************
+		homeMainSquare - 2
+		*******************/
+		// de ($(window).width() / 2 - $("#homeMainSquare").width() / 2 + 50) a ($(window).width() / 2 - $("#homeMainSquare").width() / 2) + 2%
+		$("#homeMainSquare").css("left", ($(window).width() / 2 - $("#homeMainSquare").width() / 2 + 50) + ((getLocalPercent(38, 43) / 100) * 200) + "px");
+		/*******************
+		homeMainSquare - 3
+		*******************/
+		$("#homeMainSquare").css("left", "-=" + ((getLocalPercent(43, 47) / 100) * 300) + "px");
+		/*******************
+		homeMainSquare - 4
+		*******************/
+		$("#homeMainSquare").css("left", "+=" + ((getLocalPercent(47, 50) / 100) * 118) + "px");
+		/*******************
+		homeScreen3 p
+		*******************/
+		$("#homeScreen3 p").css("opacity", 1 - getLocalPercent(50, 52) / 100);
+		/*******************
+		homeScreen3 h2
+		*******************/
+		$("#homeScreen3 h2").css(browserPrefix + "transform", "perspective(500) rotateX(" + Math.floor(0 + (getLocalPercent(50, 52) / 100) * 90) + "deg)");
+		/*******************
+		homeScreen3 - 2
+		*******************/
+		$("#homeScreen3").css("opacity", 1 - getLocalPercent(50.5, 52.5) / 100);
+		/*******************
+		homeScreen4
+		*******************/
+		$("#homeScreen4").css("opacity", 0 + getLocalPercent(52, 53) / 100);
+		// max : $(window).height() min : parseInt($("#homeMainSquare").css("top")) - parseInt($("#homeScreen3").css("top")
+		$("#homeScreen4").css("margin-top", Math.floor(parseInt($("#homeMainSquare").css("top")) - parseInt($("#homeScreen4").css("top")) + ((1 - getLocalPercent(50, 51) / 100) * $(window).height()))  + "px");
+		/*******************
+		homeScreen4 p
+		*******************/
+		$("#homeScreen4 p").css("opacity", 0 + getLocalPercent(52, 54) / 100);
+		/*******************
+		homeScreen4 h2
+		*******************/
+		$("#homeScreen4 h2").css(browserPrefix + "transform", "perspective(500) rotateX(" + Math.floor(-90 - (getLocalPercent(52, 54) / 100) * -90) + "deg)");
+		/*******************
+		homeScreen4 homeImgSmartBulb
+		*******************/
+		// TODO : Faire une anim pour faire apparaitre des eclats de lumiere
+		$("#homeImgSmartBulb").css("opacity", 1 - getLocalPercent(54, 57) / 200);
+		if (scrolledPercent >= 57) {
+			$("#homeImgSmartBulb").css("opacity", 50 + getLocalPercent(57, 60) / 200);
+		}
+		if (scrolledPercent >= 60) {
+			$("#homeImgSmartBulb").css("opacity", 1 - getLocalPercent(60, 63) / 200);
+		}
+		/*******************
+		homeScreen4 p
+		*******************/
+		$("#homeScreen4 p").css("opacity", 1 - getLocalPercent(63, 65) / 100);
+		/*******************
+		homeScreen4 h2
+		*******************/
+		if (scrolledPercent >= 63) {
+			$("#homeScreen4 h2").css(browserPrefix + "transform", "perspective(500) rotateX(" + Math.floor(0 + (getLocalPercent(63, 65) / 100) * 90) + "deg)");
+		}
+		/*******************
+		homeScreen4 - 2
+		*******************/
+		if (scrolledPercent >= 63.5) {
+			$("#homeScreen4").css("opacity", 1 - getLocalPercent(63.5, 65.5) / 100);
+		}
+		
+		/*******************
+		homeScreen5
+		*******************/
+		$("#homeScreen5").css("opacity", 0 + getLocalPercent(64, 65) / 100);
+		$("#homeScreen5").css("margin-top", Math.floor(parseInt($("#homeMainSquare").css("top")) - parseInt($("#homeScreen5").css("top")) + ((1 - getLocalPercent(61, 62) / 100) * $(window).height()))  + "px");
+		/*******************
+		homeScreen5 p
+		*******************/
+		$("#homeScreen5 p").css("opacity", 0 + getLocalPercent(65, 67) / 100);
+		/*******************
+		homeScreen5 h2
+		*******************/
+		$("#homeScreen5 h2").css(browserPrefix + "transform", "perspective(500) rotateX(" + Math.floor(-90 - (getLocalPercent(65, 67) / 100) * -90) + "deg)");
+		/*******************
+		homeScreen5 homeImgHelpfulGearBig
+		*******************/
+		// 0 a 360
+		$("#homeImgHelpfulGearBig").css(browserPrefix + "transform", "rotate(" + Math.floor(0 + (getLocalPercent(67, 70) / 100) * 360) + "deg)");
+		/*******************
+		homeScreen5 homeImgHelpfulGearSmall
+		*******************/
+		// 0 a 360
+		$("#homeImgHelpfulGearSmall").css(browserPrefix + "transform", "rotate(" + Math.floor(0 + (getLocalPercent(67, 70) / 100) * 360) + "deg)");
+
 	};
 
 	function getLocalPercent (startAtPercent, endAtPercent) {
