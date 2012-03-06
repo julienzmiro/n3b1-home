@@ -98,7 +98,7 @@ $(document).ready(function () {
 
 		$("#homeScreen6 *:not(#homeAboutLeft, #homeAge, #homeHob, #homeAct, #homeAgeRight, img, #homeActContainer, #homeQuote)").css("opacity", 0);
 		
-		$("#mainNav").css("margin-top", $(window).height() / 2 - $("#mainNav").height() / 2 - 25 + "px");
+		$("#mainNav").css("margin-top", $(window).height() / 2 - $("#mainNav").height() / 2 - 35 + "px");
 
 	};
 
@@ -118,7 +118,7 @@ $(document).ready(function () {
 		/*******************
 		mainNav
 		*******************/
-		$("#mainNav").css("margin-top", 100 + (($(window).height() / 2 - $("#mainNav").height() / 2 - 125) * (1 - getLocalPercent(0.5, 6) / 100)) + "px");
+		$("#mainNav").css("margin-top", 100 + (($(window).height() / 2 - $("#mainNav").height() / 2 - 135) * (1 - getLocalPercent(0.5, 6) / 100)) + "px");
 		/*******************
 		homeScreen2
 		*******************/
