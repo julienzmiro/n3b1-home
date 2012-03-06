@@ -1,13 +1,12 @@
-// TODO : gerer la resolution d'ecran mini pour l'init
+// TODO : gerer la resolution d'ecran mini pour l'init (et differencier init avec juste le resize text et bulles et init complet)
+// window height : 535px width : 880px
 // TODO : gerer le resize de la fenetre
 // TODO : minimiser le fouc notamment sur la typo soit en placant un preload, soit en placant les scripts juste apres les css
+// TODO : faire la vraie transition (3d) du dernier screen
 $(document).ready(function () {
-	var isScrolled = false,
-		didScroll = false,
+	var didScroll = false,
 		scrolledValue = 0,
 		scrolledPercent = 0,
-		lastScrolledValue = 0,
-		scrollingDown = false,
 		browserPrefix = "";
 
 	// shim layer with setTimeout fallback
@@ -22,7 +21,6 @@ $(document).ready(function () {
               };
     })();
 
-	// Resize text + a l'update
 	function init () {
 		var $square = $("#homeImgSuitedSquare");
 
@@ -32,10 +30,7 @@ $(document).ready(function () {
 		if ($.browser.msie)		browserPrefix = "-ms-";
 
 		$(window).bind("resize", function (e) {
-			if ($(window).scrollTop() > 0) {
-				isScrolled = true;
-			}
-			if (!isScrolled) {
+			if (!$(window).scrollTop() > 0) {
 				// TODO : Faire une fonction updateLayout pour mettre a jour le first screen si topScroll = 0
 				//updateLayout();	
 			}
@@ -47,9 +42,10 @@ $(document).ready(function () {
 			scrollHandler();
 		});
 
-		if ($(window).scrollTop() > 0) {
-			isScrolled = true;
-		}
+		$("#logoLink, #portfolioLink").bind("click", function (e) {
+			e.preventDefault();
+			$("body").animate({scrollTop : 0}, 800);
+		});
 
 		$square.detach();
 		$("#homeImgSmartSquare, #homeImgHelpfulSquare").remove();
@@ -100,22 +96,15 @@ $(document).ready(function () {
 		});
 		$("#homeImgHelpfulHeart").css("top", "-=22px");
 
-		$("#homeScreen6 *:not(#homeAboutLeft, #homeAge, #homeHob, #homeAct, #homeAgeRight, img, #homeActContainer)").css("opacity", 0);
+		$("#homeScreen6 *:not(#homeAboutLeft, #homeAge, #homeHob, #homeAct, #homeAgeRight, img, #homeActContainer, #homeQuote)").css("opacity", 0);
+		
+		$("#mainNav").css("margin-top", $(window).height() / 2 - $("#mainNav").height() / 2 - 25 + "px");
+
 	};
 
 	function scrollHandler () {
-		lastScrolledValue = scrolledValue;
 		scrolledValue = $(window).scrollTop();
 		scrolledPercent = Math.floor((scrolledValue / $(document).height()) * 100);
-
-		if (lastScrolledValue > scrolledValue) {
-			scrollingDown = false;
-		} else {
-			scrollingDown = true;
-		}
-		if (scrolledValue > 0) {
-			isScrolled = true;
-		}
 		didScroll = true;
 	};
 
@@ -124,8 +113,12 @@ $(document).ready(function () {
 		/*******************
 		homeScreen1
 		*******************/
-		$("#homeScreen1").css("opacity", 1 - (scrolledPercent / 5));
+		$("#homeScreen1").css("opacity", 1 - (scrolledPercent / 4));
 		$("#homeScreen1").css("margin-top", 0 - 2000 * (getLocalPercent(5, 12) / 100) + "px");
+		/*******************
+		mainNav
+		*******************/
+		$("#mainNav").css("margin-top", 100 + (($(window).height() / 2 - $("#mainNav").height() / 2 - 125) * (1 - getLocalPercent(0.5, 6) / 100)) + "px");
 		/*******************
 		homeScreen2
 		*******************/
@@ -366,7 +359,15 @@ $(document).ready(function () {
 		*******************/
 		$("#homeHobImgDev").css("opacity", 0 + getLocalPercent(74, 76) / 100);
 		// scale
-		$("#homeHobImgDev").css(browserPrefix + "transform", "scale(" + 0 + ((getLocalPercent(74, 76) / 100) * 1) + ")");
+		$("#homeHobImgDev").css(browserPrefix + "transform", "scale(" + 0 + ((getLocalPercent(74, 76) / 100) * 1) + ")");		
+		/*******************
+		homeQuote homeAboutTitle
+		*******************/
+		$("#homeQuote .homeAboutTitle").css("opacity", 0 + getLocalPercent(75, 76) / 100);
+		/*******************
+		homeQuote p
+		*******************/
+		$("#homeQuote p:not(.homeAboutTitle)").css("opacity", 0 + getLocalPercent(76, 77) / 100);
 		/*******************
 		homeAct homeAboutTitle
 		*******************/
@@ -404,18 +405,18 @@ $(document).ready(function () {
 		/*******************
 		homeScreen6
 		*******************/
-		$("#homeScreen6").css("opacity", 1 - getLocalPercent(84, 86) / 100);
+		$("#homeScreen6").css("opacity", 1 - getLocalPercent(86, 88) / 100);
 		/*******************
 		homeScreen6
 		*******************/
-		if (scrolledPercent >= 85) {
-			$("#homeScreen6").css("margin-top", 0 - 2000 * (getLocalPercent(86, 94) / 100) + "px");
+		if (scrolledPercent >= 88) {
+			$("#homeScreen6").css("margin-top", 0 - 2000 * (getLocalPercent(88, 100) / 100) + "px");
 		}
 		/*******************
 		homeScreen7
 		*******************/
-		$("#homeScreen7").css("opacity", 0 + getLocalPercent(86, 89) / 100);
-		$("#homeScreen7").css("margin-top", $(window).height() - $(window).height() * (getLocalPercent(85.5, 86) / 100));
+		$("#homeScreen7").css("opacity", 0 + getLocalPercent(88, 90) / 100);
+		$("#homeScreen7").css("margin-top", $(window).height() - $(window).height() * (getLocalPercent(87.5, 88) / 100));
 	};
 
 	function getLocalPercent (startAtPercent, endAtPercent) {

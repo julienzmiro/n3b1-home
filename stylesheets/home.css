@@ -27,6 +27,11 @@ h2 {
 .grey {
 	color: #b9b9b9;
 }
+#homeQuoteP {
+	font-style: italic;
+	color: #e98940;
+	line-height: 18px;
+}
 
 /********
 JS
