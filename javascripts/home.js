@@ -1,9 +1,17 @@
 // TODO : minimiser le fouc notamment sur la typo soit en placant un preload, soit en placant les scripts juste apres les css
+/*
+*
+*
+* Important : Minifier :
+* java -jar /usr/local/yuicompressor/build/yuicompressor-2.4.7.jar /Users/julienzmiro/Sites/jz/n3rdb1rd/public/javascripts/home.js -o /Users/julienzmiro/Sites/jz/n3rdb1rd/public/javascripts/home-min.js --type js --charset utf-8
+*
+*/
 $(document).ready(function () {
 	var didScroll = false,
 		scrolledValue = 0,
 		scrolledPercent = 0,
-		browserPrefix = "";
+		browserPrefix = "",
+		isMobile = false;
 
 	// shim layer with setTimeout fallback
     window.requestAnimFrame = (function(){
@@ -19,6 +27,8 @@ $(document).ready(function () {
 
 	function init () {
 
+		isMobile = (/iphone|ipad|ipod|android|blackberry|mini|windows\sce|palm/i.test(navigator.userAgent.toLowerCase()));
+
 		initAge();
 
 		if ($.browser.mozilla)	browserPrefix = "-moz-";
@@ -27,7 +37,8 @@ $(document).ready(function () {
 		if ($.browser.msie)		browserPrefix = "-ms-";
 
 		$(window).bind("resize", function (e) {
-			if (!$(window).scrollTop() > 0) {
+			if (!$(window).scrollTop() > 0 && $(window).height() > 534 && $(window).width() > 879 && !isMobile) {
+				console.log("resize");
 				initLayout();	
 			}
 			resizeText();
@@ -42,7 +53,7 @@ $(document).ready(function () {
 		resizeText();
 		resizeBubbles();
 
-		if ($(window).height() > 534 && $(window).width() > 879) {
+		if ($(window).height() > 534 && $(window).width() > 879 && !isMobile) {
 			initAnim();
 		}
 	};
