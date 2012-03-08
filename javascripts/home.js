@@ -19,6 +19,8 @@ $(document).ready(function () {
 
 	function init () {
 
+		initAge();
+
 		if ($.browser.mozilla)	browserPrefix = "-moz-";
 		if ($.browser.webkit)	browserPrefix = "-webkit-";
 		if ($.browser.opera)	browserPrefix = "-o-";
@@ -101,6 +103,87 @@ $(document).ready(function () {
 		
 		$("#mainNav").css("margin-top", $(window).height() / 2 - $("#mainNav").height() / 2 - 35 + "px");
 
+	};
+
+	// http://stackoverflow.com/questions/8887510/javascript-count-up-timer-modification
+	function initAge () {
+		var beginDate = new Date(),
+			rest = 0,
+			daysByMonths = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ],
+			sec = 0,
+			min = 0,
+			hours = 0,
+			days = 0,
+			months = 0,
+			years = 0,
+			updateDaysByMonths = function () {
+			    var dateNow = new Date(),
+			    	currYear = dateNow.getFullYear();
+
+			    if ( (currYear % 4 == 0 && currYear % 100 != 0 ) || currYear % 400 == 0 ) {
+			        daysByMonths[1] = 29;
+			    }
+
+			    setTimeout(function () {
+				    updateDaysByMonths();
+				}, (new Date((currYear+1), 1, 2) - dateNow));
+			},
+			datePartDiff = function (then, now, MAX) {
+			    var diff = now - then - rest;
+
+			    rest = 0;
+
+			    if ( diff > -1 ) return diff;
+
+			    rest = 1;
+
+			    return (MAX + diff);
+			},
+			calculate = function () {
+			    var currDate = new Date(),
+			    	prevDate = beginDate;
+
+			    sec = datePartDiff(prevDate.getSeconds(), currDate.getSeconds(), 60);
+			    min = datePartDiff(prevDate.getMinutes(), currDate.getMinutes(), 60);
+			    hours = datePartDiff(prevDate.getHours(), currDate.getHours(), 24);
+			    days = datePartDiff(prevDate.getDate(), currDate.getDate(), daysByMonths[currDate.getMonth()]);
+			    months = datePartDiff(prevDate.getMonth(), currDate.getMonth(), 12);
+			    years = datePartDiff(prevDate.getFullYear(), currDate.getFullYear(),0);
+			},
+			addLeadingZero = function (value) {
+			    return value < 10 ? ("0" + value) : value;
+			},
+			formatTime = function () {
+			    sec = addLeadingZero(sec);
+			    min = addLeadingZero(min);
+			    hours = addLeadingZero(hours);
+			},
+			updateCounter = function () {
+			    calculate();
+			    formatTime();
+
+			    // Update du dom
+			    $("#homeAgeYearsNum").html(years);
+			    $("#homeAgeMonths").html(months + " <span>months</span>");
+			    $("#homeAgeDays").html(days + " <span>days</span>");
+			    $("#homeAgeBottom").html(hours + " <span>hours</span> " + min +" <span>min</span> " + sec + "<span>sec old</span>");
+
+			    setTimeout(function () {
+				    updateCounter();
+				}, 1000);
+			};
+
+
+		beginDate.setFullYear(1985);
+		beginDate.setMonth(10);
+		beginDate.setDate(10);
+		beginDate.setHours(12);
+		beginDate.setMinutes(05);
+		beginDate.setSeconds(22);
+
+		updateDaysByMonths();
+    	updateCounter();
+		
 	};
 
 	function scrollHandler () {
@@ -408,7 +491,9 @@ $(document).ready(function () {
 		*******************/
 		//$("#homeScreen6").css("opacity", 1 - getLocalPercent(88, 89) / 100);
 		$("#homeScreen6").css(browserPrefix + "transform", "perspective(800) rotateX(" + Math.floor(0 + (getLocalPercent(87, 89) / 100) * 45) + "deg)");
-		$("#homeScreen6").css("margin-top", 0 - 200 * (getLocalPercent(87, 89) / 100) + "px");
+		if (scrolledPercent >= 87 && scrolledPercent < 89.5) {
+			$("#homeScreen6").css("margin-top", 0 - 200 * (getLocalPercent(87, 89) / 100) + "px");
+		}
 		$("#homeScreen6").css("opacity", 1 - getLocalPercent(88.5, 89) / 100);
 		/*******************
 		homeScreen6
