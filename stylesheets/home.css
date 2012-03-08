@@ -60,12 +60,20 @@ html {
 	margin-bottom: 100px;
 	max-width: 710px;
 }
-.animScreen h2 {
+.animScreen h2,
+#homeScreen6,
+#homeScreen7 {
 	-moz-transform-style: "preserve-3d";
 	-webkit-transform-style: "preserve-3d";
 	-o-transform-style: "preserve-3d";
 	-ms-transform-style: "preserve-3d";
 	transform-style: "preserve-3d";
+
+	-moz-transform-origin: "50% 50%";
+	-webkit-transform-origin: "50% 50%";
+	-o-transform-origin: "50% 50%";
+	-ms-transform-origin: "50% 50%";
+	transform-origin: "50% 50%";
 }
 #content img {
 	-webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);

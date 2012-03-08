@@ -1,8 +1,4 @@
-// TODO : gerer la resolution d'ecran mini pour l'init (et differencier init avec juste le resize text et bulles et init complet)
-// window height : 535px width : 880px
-// TODO : gerer le resize de la fenetre
 // TODO : minimiser le fouc notamment sur la typo soit en placant un preload, soit en placant les scripts juste apres les css
-// TODO : faire la vraie transition (3d) du dernier screen
 $(document).ready(function () {
 	var didScroll = false,
 		scrolledValue = 0,
@@ -22,7 +18,6 @@ $(document).ready(function () {
     })();
 
 	function init () {
-		var $square = $("#homeImgSuitedSquare");
 
 		if ($.browser.mozilla)	browserPrefix = "-moz-";
 		if ($.browser.webkit)	browserPrefix = "-webkit-";
@@ -31,15 +26,10 @@ $(document).ready(function () {
 
 		$(window).bind("resize", function (e) {
 			if (!$(window).scrollTop() > 0) {
-				// TODO : Faire une fonction updateLayout pour mettre a jour le first screen si topScroll = 0
-				//updateLayout();	
+				initLayout();	
 			}
 			resizeText();
 			resizeBubbles();
-		});
-
-		$(window).bind("scroll", function (e) {
-			scrollHandler();
 		});
 
 		$("#logoLink, #portfolioLink").bind("click", function (e) {
@@ -47,15 +37,28 @@ $(document).ready(function () {
 			$("body").animate({scrollTop : 0}, 800);
 		});
 
+		resizeText();
+		resizeBubbles();
+
+		if ($(window).height() > 534 && $(window).width() > 879) {
+			initAnim();
+		}
+	};
+
+	function initAnim () {
+		var $square = $("#homeImgSuitedSquare");
+
+		$(window).bind("scroll", function (e) {
+			scrollHandler();
+		});
+
 		$square.detach();
 		$("#homeImgSmartSquare, #homeImgHelpfulSquare").remove();
 		$square.attr("id", "homeMainSquare");
 		$("#homeScreen2").before($square);
-
-		resizeText();
-		resizeBubbles();
+		$("#content").prepend('<div id="scrollWrapper"></div>');
+		
 		initLayout();
-
 		scrollHandler();
 
 		(function animloop(){
@@ -65,11 +68,9 @@ $(document).ready(function () {
 				didScroll = false;
 			}
 	    })();
-
 	};
 
 	function initLayout () {
-		$("#content").prepend('<div id="scrollWrapper"></div>');
 		// * 7 de base a ajuster pour la vitesse
 		$("#scrollWrapper").css("height", $(window).height() * 11);
 
@@ -91,10 +92,10 @@ $(document).ready(function () {
 		});
 
 		// Correction img homeScreen5
-		$("#homeScreen5 div img:not(#homeImgHelpfulHeart)").each(function (i, elem) {
-			$(this).css("bottom", "+=22px");
-		});
-		$("#homeImgHelpfulHeart").css("top", "-=22px");
+		$("#homeImgHelpfulLine").css("bottom", "22px");
+		$("#homeImgHelpfulGearSmall").css("bottom", "32px");
+		$("#homeImgHelpfulGearBig").css("bottom", "42px");
+		$("#homeImgHelpfulHeart").css("top", "-22px");
 
 		$("#homeScreen6 *:not(#homeAboutLeft, #homeAge, #homeHob, #homeAct, #homeAgeRight, img, #homeActContainer, #homeQuote)").css("opacity", 0);
 		
@@ -181,56 +182,56 @@ $(document).ready(function () {
 		homeMainSquare - 2
 		*******************/
 		// de ($(window).width() / 2 - $("#homeMainSquare").width() / 2 + 50) a ($(window).width() / 2 - $("#homeMainSquare").width() / 2) + 2%
-		$("#homeMainSquare").css("left", ($("#homeImgSuitedLine").offset().left + $("#homeImgSuitedLine").width() / 2 - $("#homeMainSquare").width() / 2) + ((getLocalPercent(27, 32) / 100) * 200) + "px");
+		$("#homeMainSquare").css("left", ($("#homeImgSuitedLine").offset().left + $("#homeImgSuitedLine").width() / 2 - $("#homeMainSquare").width() / 2) + ((getLocalPercent(27, 29) / 100) * 100) + "px");
 		/*******************
 		homeMainSquare - 3
 		*******************/
-		$("#homeMainSquare").css("left", "-=" + ((getLocalPercent(32.5, 36.5) / 100) * 300) + "px");
+		$("#homeMainSquare").css("left", "-=" + ((getLocalPercent(29.5, 31.5) / 100) * 200) + "px");
 		/*******************
 		homeMainSquare - 4
 		*******************/
-		$("#homeMainSquare").css("left", "+=" + ((getLocalPercent(37, 40) / 100) * 100) + "px");
+		$("#homeMainSquare").css("left", "+=" + ((getLocalPercent(32, 34) / 100) * 100) + "px");
 		/*******************
 		homeScreen3 p
 		*******************/
-		$("#homeScreen3 p").css("opacity", 1 - getLocalPercent(40, 42) / 100);
+		$("#homeScreen3 p").css("opacity", 1 - getLocalPercent(38, 40) / 100);
 		/*******************
 		homeScreen3 h2
 		*******************/
-		$("#homeScreen3 h2").css(browserPrefix + "transform", "perspective(500) rotateX(" + Math.floor(0 + (getLocalPercent(40, 42) / 100) * 90) + "deg)");
+		$("#homeScreen3 h2").css(browserPrefix + "transform", "perspective(500) rotateX(" + Math.floor(0 + (getLocalPercent(38, 40) / 100) * 90) + "deg)");
 		/*******************
 		homeScreen3 - 2
 		*******************/
-		$("#homeScreen3").css("opacity", 1 - getLocalPercent(40.5, 42) / 100);
+		$("#homeScreen3").css("opacity", 1 - getLocalPercent(38.5, 40) / 100);
 		/*******************
 		homeScreen3
 		*******************/
 		if (scrolledPercent >= 50.5) {
-			$("#homeScreen2").css("margin-top", 0 - 2000 * (getLocalPercent(42, 48) / 100) + "px");
+			$("#homeScreen2").css("margin-top", 0 - 2000 * (getLocalPercent(40, 46) / 100) + "px");
 		}
 		/*******************
 		homeScreen4
 		*******************/
-		$("#homeScreen4").css("opacity", 0 + getLocalPercent(42, 42.1) / 100);
+		$("#homeScreen4").css("opacity", 0 + getLocalPercent(40, 40.1) / 100);
 		// max : $(window).height() min : parseInt($("#homeMainSquare").css("top")) - parseInt($("#homeScreen3").css("top")
-		$("#homeScreen4").css("margin-top", Math.floor(parseInt($("#homeMainSquare").css("top")) - parseInt($("#homeScreen4").css("top")) + ((1 - getLocalPercent(40.5, 41) / 100) * $(window).height()))  + "px");
+		$("#homeScreen4").css("margin-top", Math.floor(parseInt($("#homeMainSquare").css("top")) - parseInt($("#homeScreen4").css("top")) + ((1 - getLocalPercent(38.5, 39) / 100) * $(window).height()))  + "px");
 		/*******************
 		homeScreen4 p
 		*******************/
-		$("#homeScreen4 p").css("opacity", 0 + getLocalPercent(42, 44) / 100);
+		$("#homeScreen4 p").css("opacity", 0 + getLocalPercent(40, 42) / 100);
 		/*******************
 		homeScreen4 h2
 		*******************/
-		$("#homeScreen4 h2").css(browserPrefix + "transform", "perspective(500) rotateX(" + Math.floor(-90 - (getLocalPercent(42, 44) / 100) * -90) + "deg)");
+		$("#homeScreen4 h2").css(browserPrefix + "transform", "perspective(500) rotateX(" + Math.floor(-90 - (getLocalPercent(40, 42) / 100) * -90) + "deg)");
 		/*******************
 		homeScreen4 homeImgSmartBulb
 		*******************/
-		$("#homeImgSmartBulb").css("opacity", 1 - getLocalPercent(44, 46) / 200);
-		if (scrolledPercent >= 46) {
-			$("#homeImgSmartBulb").css("opacity", 50 + getLocalPercent(46, 47) / 200);
+		$("#homeImgSmartBulb").css("opacity", 1 - getLocalPercent(42, 44) / 200);
+		if (scrolledPercent >= 44) {
+			$("#homeImgSmartBulb").css("opacity", 50 + getLocalPercent(44, 45) / 200);
 		}
-		if (scrolledPercent >= 47) {
-			$("#homeImgSmartBulb").css("opacity", 1 - getLocalPercent(47, 48) / 200);
+		if (scrolledPercent >= 45) {
+			$("#homeImgSmartBulb").css("opacity", 1 - getLocalPercent(45, 46) / 200);
 		}
 		/*******************
 		homeScreen4 p
@@ -405,18 +406,30 @@ $(document).ready(function () {
 		/*******************
 		homeScreen6
 		*******************/
-		$("#homeScreen6").css("opacity", 1 - getLocalPercent(86, 88) / 100);
+		//$("#homeScreen6").css("opacity", 1 - getLocalPercent(88, 89) / 100);
+		$("#homeScreen6").css(browserPrefix + "transform", "perspective(800) rotateX(" + Math.floor(0 + (getLocalPercent(87, 89) / 100) * 45) + "deg)");
+		$("#homeScreen6").css("margin-top", 0 - 200 * (getLocalPercent(87, 89) / 100) + "px");
+		$("#homeScreen6").css("opacity", 1 - getLocalPercent(88.5, 89) / 100);
 		/*******************
 		homeScreen6
 		*******************/
-		if (scrolledPercent >= 88) {
-			$("#homeScreen6").css("margin-top", 0 - 2000 * (getLocalPercent(88, 100) / 100) + "px");
+		if (scrolledPercent >= 89.5) {
+			$("#homeScreen6").css("margin-top", 0 - 2000 * (getLocalPercent(89.5, 100) / 100) + "px");
 		}
 		/*******************
 		homeScreen7
 		*******************/
-		$("#homeScreen7").css("opacity", 0 + getLocalPercent(88, 90) / 100);
-		$("#homeScreen7").css("margin-top", $(window).height() - $(window).height() * (getLocalPercent(87.5, 88) / 100));
+		//$("#homeScreen7").css("opacity", 0 + getLocalPercent(90, 90.5) / 100);
+
+		$("#homeScreen7").css("margin-top", 250 + ($(window).height() - $(window).height() * (getLocalPercent(87.5, 87.9) / 100)));
+
+		$("#homeScreen7").css(browserPrefix + "transform", "perspective(800) rotateX(" + Math.floor(-75 - (getLocalPercent(88, 90) / 100) * -75) + "deg)");
+		if (scrolledPercent >= 88) {
+			$("#homeScreen7").css("margin-top", 250 - (250 * (getLocalPercent(88, 90) / 100)));
+		}
+		$("#homeScreen7").css("opacity", 0 + getLocalPercent(88.2, 89) / 100);
+
+		//$("#homeScreen7").css("margin-top", $(window).height() - $(window).height() * (getLocalPercent(89.5, 90) / 100));
 	};
 
 	function getLocalPercent (startAtPercent, endAtPercent) {
