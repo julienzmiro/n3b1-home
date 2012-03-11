@@ -267,6 +267,10 @@ $(document).ready(function () {
 			$("#homeScreen2").css("margin-top", 0 - 2000 * (getLocalPercent(32, 40) / 100) + "px");
 		}
 		/*******************
+		homeScreen2 p
+		*******************/
+		$("#homeScreen2 p").css("opacity", 1 - (getLocalPercent(24.5, 25.3) / 100));
+		/*******************
 		homeScreen3
 		*******************/
 		$("#homeScreen3").css("opacity", 0 + getLocalPercent(31, 32) / 100);
@@ -500,7 +504,6 @@ $(document).ready(function () {
 		/*******************
 		homeScreen6
 		*******************/
-		//$("#homeScreen6").css("opacity", 1 - getLocalPercent(88, 89) / 100);
 		$("#homeScreen6").css(browserPrefix + "transform", "perspective(800) rotateX(" + Math.floor(0 + (getLocalPercent(87, 89) / 100) * 45) + "deg)");
 		if (scrolledPercent >= 87 && scrolledPercent < 89.5) {
 			$("#homeScreen6").css("margin-top", 0 - 200 * (getLocalPercent(87, 89) / 100) + "px");
@@ -515,17 +518,13 @@ $(document).ready(function () {
 		/*******************
 		homeScreen7
 		*******************/
-		//$("#homeScreen7").css("opacity", 0 + getLocalPercent(90, 90.5) / 100);
-
 		$("#homeScreen7").css("margin-top", 250 + ($(window).height() - $(window).height() * (getLocalPercent(87.5, 87.9) / 100)));
-
 		$("#homeScreen7").css(browserPrefix + "transform", "perspective(800) rotateX(" + Math.floor(-75 - (getLocalPercent(88, 90) / 100) * -75) + "deg)");
 		if (scrolledPercent >= 88) {
 			$("#homeScreen7").css("margin-top", 250 - (250 * (getLocalPercent(88, 90) / 100)));
 		}
 		$("#homeScreen7").css("opacity", 0 + getLocalPercent(88.2, 89) / 100);
 
-		//$("#homeScreen7").css("margin-top", $(window).height() - $(window).height() * (getLocalPercent(89.5, 90) / 100));
 	};
 
 	function getLocalPercent (startAtPercent, endAtPercent) {

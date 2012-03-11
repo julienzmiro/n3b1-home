@@ -1,3 +1,10 @@
+/*
+*
+*
+* Important : Minifier :
+* java -jar /usr/local/yuicompressor/build/yuicompressor-2.4.7.jar /Users/julienzmiro/Sites/jz/n3rdb1rd/public/stylesheets/home.css -o /Users/julienzmiro/Sites/jz/n3rdb1rd/public/stylesheets/home-min.css --charset utf-8
+*
+*/
 /********
 BASE
 ********/
@@ -104,6 +111,15 @@ html {
 	position: relative;
 	height: 400px;
 	overflow: visible;
+}
+#homeScreen2 p {
+	text-align: center;
+	width: 55%;
+	max-width: 395px;
+	margin-top: 130px;
+	margin-right: auto;
+	margin-bottom: 0px;
+	margin-left: auto;
 }
 #homeScreen2 img {
 	position: absolute;
